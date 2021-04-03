@@ -114,14 +114,14 @@
                     <v-progress-linear
                       height="15px"
                       rounded
-                      :value="(100 * aviableRoom) / numberOfRooms"
+                      :value="(100 * availableRooms) / numberOfRooms"
                       color="#1DE9B6"
                     ></v-progress-linear>
                     <v-card-subtitle class="card-text-subtitle"
                       >Total rooms: {{ numberOfRooms }}</v-card-subtitle
                     >
                     <v-card-text class="text-sm-h4 font-weight-bold">{{
-                      aviableRoom
+                      availableRooms
                     }}</v-card-text>
                   </div>
                 </v-col>
@@ -164,7 +164,7 @@
 
 <script>
 import LeftMenu from "@/components/LeftMenu.vue";
-import TopBar from "../components/TopBar.vue";
+import TopBar from "@/components/TopBar.vue";
 
 export default {
   name: "Dashboard",
@@ -174,10 +174,18 @@ export default {
   },
   data: () => ({
     pageName: "Dashboard",
-    aviableRoom: 350,
-    numberOfRooms: 1000,
-    soldOutRoom: 750,
   }),
+  computed: {
+    availableRooms() {
+      return this.$store.getters.getAvailableRooms.length;
+    },
+    numberOfRooms() {
+      return this.$store.getters.getRooms.length;
+    },
+    soldOutRoom() {
+      return this.$store.getters.getBookedRooms.length;
+    },
+  },
 
   methods: {},
 };

@@ -2,7 +2,7 @@
   <v-main class="main">
     <LeftMenu />
     <TopBar :namePage="pageName" />
-    <v-container class="relative top-32 md:left-20">
+    <v-container class="relative top-32 xl:left-20">
       <v-row align="center">
         <v-col class="m-auto" cols="12">
           <div>
@@ -14,9 +14,9 @@
                 color="#1DE9B6"
                 background-color="#F4F4F4"
               >
-                <v-tab @click="sort">All Rooms</v-tab>
-                <v-tab>Available</v-tab>
-                <v-tab>Booked</v-tab>
+                <v-tab @click="getAll()">All Rooms</v-tab>
+                <v-tab @click="getAvailable()">Available</v-tab>
+                <v-tab @click="getBooked()">Booked</v-tab>
               </v-tabs>
             </v-card>
           </div>
@@ -61,7 +61,7 @@
               {{ "Floor F-" + item.floor }}
             </template>
             <template v-slot:item.number="{ item }">
-              {{ "Room R-" + item.floor }}
+              {{ "Room R-" + item.number }}
             </template>
             <template v-slot:top>
               <v-toolbar flat color="#F4F4F4">
@@ -82,33 +82,97 @@
                         <v-row>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="editedItem.name"
-                              label="Dessert name"
+                              v-model="editedItem.RoomType"
+                              label="Name"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="editedItem.calories"
-                              label="Calories"
+                              v-model="editedItem.number"
+                              label="Number"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="editedItem.fat"
-                              label="Fat (g)"
+                              v-model="editedItem.floor"
+                              label="Floor"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="editedItem.carbs"
-                              label="Carbs (g)"
+                              v-model="editedItem.capacity"
+                              label="Capacity"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="editedItem.protein"
-                              label="Protein (g)"
+                              v-model="editedItem.price"
+                              label="Price"
                             ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              v-model="editedItem.description"
+                              label="Description"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-switch
+                              v-model="editedItem.facilities.Wifi"
+                              label="Wifi"
+                              color="success"
+                              hide-details
+                            ></v-switch>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-switch
+                              v-model="editedItem.facilities.TV"
+                              label="TV"
+                              color="success"
+                              hide-details
+                            ></v-switch>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-switch
+                              v-model="editedItem.facilities.bed"
+                              label="Singel Bed"
+                              color="success"
+                              hide-details
+                            ></v-switch>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-switch
+                              v-model="editedItem.facilities.doubleBed"
+                              label="Double Bed"
+                              color="success"
+                              hide-details
+                            ></v-switch>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-switch
+                              v-model="editedItem.facilities.shower"
+                              label="Shower"
+                              color="success"
+                              hide-details
+                            ></v-switch>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-switch
+                              v-model="editedItem.facilities.dinner"
+                              label="Dinner"
+                              color="success"
+                              hide-details
+                            ></v-switch>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-file-input
+                              v-model="imagesURL"
+                              label="File input"
+                              filled
+                              prepend-icon="mdi-camera"
+                              show-size
+                              multiple
+                            ></v-file-input>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -181,7 +245,9 @@
 <script>
 import LeftMenu from "@/components/LeftMenu.vue";
 import TopBar from "../components/TopBar.vue";
-
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/storage";
 export default {
   name: "Rooms",
   components: {
@@ -189,8 +255,11 @@ export default {
     TopBar,
   },
   data: () => ({
+    showAll: true,
+    showAvailable: false,
+    showBooked: false,
     pageName: "Rooms",
-    sort: "fat",
+    sort: "number",
     page: 1,
     pageCount: 0,
     itemsPerPage: 10,
@@ -209,25 +278,48 @@ export default {
       { text: "Number", value: "number" },
       { text: "Bed Type", value: "bedType" },
       { text: "Room Floor", value: "floor" },
+      { text: "Capacity", value: "capacity" },
       { text: "Room facilities", value: "facilities" },
       { text: "Room Status", value: "isAvailable" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    desserts: [],
     editedIndex: -1,
+    imagesURL: [],
     editedItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      RoomType: "",
+      number: 0,
+      floor: 0,
+      capacity: 0,
+      isAvailable: true,
+      price: 0,
+      facilities: {
+        Wifi: false,
+        TV: false,
+        bed: false,
+        doubleBed: false,
+        shower: false,
+        dinner: false,
+      },
+      description: "",
+      images: [],
     },
     defaultItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      description: "",
+      RoomType: "",
+      number: 0,
+      floor: 0,
+      capacity: 0,
+      price: 0,
+      isAvailable: true,
+      facilities: {
+        Wifi: false,
+        TV: false,
+        bed: false,
+        doubleBed: false,
+        shower: false,
+        dinner: false,
+      },
+      images: [],
     },
   }),
 
@@ -236,7 +328,7 @@ export default {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
     rooms() {
-      return this.$store.getters.getRooms;
+      return this.getRooms();
     },
   },
 
@@ -249,28 +341,44 @@ export default {
     },
   },
 
-  created() {
-    this.initialize();
-  },
   methods: {
-    initialize() {
-      this.desserts = [];
+    getRooms() {
+      if (this.showAvailable) return this.$store.getters.getAvailableRooms;
+      if (this.showBooked) return this.$store.getters.getBookedRooms;
+      if (this.showAll) return this.$store.getters.getRooms;
     },
-
+    getAvailable() {
+      this.showAvailable = true;
+      this.showAll = false;
+      this.showBooked = false;
+    },
+    getBooked() {
+      this.showAvailable = false;
+      this.showAll = false;
+      this.showBooked = true;
+    },
+    getAll() {
+      this.showAvailable = false;
+      this.showAll = true;
+      this.showBooked = false;
+    },
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.rooms.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.rooms.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.$store.dispatch("DELETE_ROOM", {
+        id: this.editedItem.id,
+        index: this.editedIndex,
+      });
       this.closeDelete();
     },
 
@@ -289,14 +397,59 @@ export default {
         this.editedIndex = -1;
       });
     },
+    async uploadImg(x) {
+      return new Promise((resolve, reject) => {
+        console.log("Uploading image ...");
+        const storageRef = firebase
+          .storage()
+          .ref(`Rooms/${this.editedItem.number}/${x.name}/`);
 
-    save() {
+        const uploadTask = storageRef.put(x);
+
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          (error) => {
+            console.log(error);
+            reject(error);
+          },
+          async () => {
+            const imgURL = await uploadTask.snapshot.ref.getDownloadURL();
+            console.log("uploaded image: " + imgURL);
+            resolve(imgURL);
+          }
+        );
+      });
+    },
+
+    async save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
       } else {
-        this.desserts.push(this.editedItem);
+        let aux = [];
+        for (var i = 0; i < this.imagesURL.length; i++) {
+          const res = await this.uploadImg(this.imagesURL[i]);
+          aux.push(res);
+        }
+
+        this.editedItem.images = aux;
+        console.log(this.editedItem.images);
+        await firebase
+          .firestore()
+          .collection("Rooms")
+          .doc(this.editedItem.number)
+          .set(this.editedItem)
+          .then(() => console.log("norm"))
+          .catch((error) => {
+            console.log(error);
+          });
+        this.$store.dispatch("IMPORT_ROOMS");
+        this.close();
       }
-      this.close();
     },
     getColor(isAvailable) {
       if (isAvailable === true) return "green";
@@ -309,7 +462,6 @@ export default {
           res += i + ", ";
         }
       }
-
       return res;
     },
   },

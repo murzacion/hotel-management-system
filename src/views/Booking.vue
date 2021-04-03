@@ -1,28 +1,34 @@
 <template>
-  <v-main><LeftMenu :change="change" :selected="selected" /> </v-main>
+  <v-main class="main">
+    <LeftMenu />
+    <TopBar :namePage="pageName" />
+  </v-main>
 </template>
 
 <script>
 import LeftMenu from "@/components/LeftMenu.vue";
+import TopBar from "@/components/TopBar.vue";
 
 export default {
   name: "Booking",
   components: {
     LeftMenu,
+    TopBar,
   },
-  data: () => ({
-    selected: 2,
-  }),
+  data() {
+    return {
+      pageName: "Booking",
+    };
+  },
 
-  methods: {
-    change(i) {
-      this.selected = i;
-      if (i === 0) this.$router.push({ name: "Dashboard" });
-      if (i === 1) this.$router.push({ name: "Rooms" });
-      if (i === 3) this.$router.push({ name: "Guest" });
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style></style>
+<style>
+.main {
+  background-color: #f9f9f9;
+  height: 100%;
+  max-width: 100%;
+}
+</style>

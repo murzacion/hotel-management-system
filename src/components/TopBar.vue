@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-3 left-2 w-full right-8 md:left-32 md:w-11/12 z-10">
+  <div class="fixed top-3 left-2 w-12/12 right-8 lg:left-32 lg:w-11/12 z-10">
     <v-app-bar class="" height="100px" max-height="100px" color="#E0F2F1">
       <v-menu right bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -15,11 +15,19 @@
         </v-list>
       </v-menu>
       <v-toolbar-title class="toolbar-title">{{ namePage }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div class="flex-col">
+        <div>{{ email }}</div>
+        <div><v-btn @click="logout" text>Log out</v-btn></div>
+      </div>
     </v-app-bar>
   </div>
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 export default {
   name: "TopBar",
   props: {
@@ -44,7 +52,19 @@ export default {
         route: "Guest",
       },
     ],
+    email: "",
   }),
+  created() {
+    this.email = firebase.auth().currentUser.email;
+    console.log(this.email);
+  },
+  methods: {
+    logout() {
+      firebase.auth().signOut();
+      console.log(firebase.auth().currentUser);
+      this.$router.replace({ name: "Login" });
+    },
+  },
 };
 </script>
 
@@ -56,7 +76,7 @@ export default {
   border-radius: 50px !important;
 }
 .toolbar-title {
-  font-size: 40px !important;
+  font-size: 35px !important;
   font-weight: 600;
   color: #757575;
 }

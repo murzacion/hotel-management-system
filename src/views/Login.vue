@@ -106,6 +106,9 @@ export default {
     },
     error: null,
   }),
+  created() {
+    console.log(firebase.auth().currentUser);
+  },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
@@ -114,9 +117,13 @@ export default {
           .signInWithEmailAndPassword(this.email, this.password)
           .then((data) => {
             console.log(data);
-            console.log(this.email);
-            console.log(this.password);
-            this.$router.replace({ name: "Dashboard" });
+            if (
+              firebase.auth().currentUser.uid === "Cp28G9hieCcbj2kTsd78Mt5j9zQ2"
+            )
+              this.$router.replace({ name: "Dashboard" });
+            else {
+              firebase.auth().signOut();
+            }
           })
           .catch((error) => {
             console.log(error);
