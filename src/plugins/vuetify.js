@@ -8,14 +8,11 @@ export default new Vuetify({
   theme: {
     // ...
   },
-  iconfont: "mdi",
+  iconfont: "custom",
   icons: {
     values: {
       OpenDoor: {
         component: OpenDoor,
-        props: {
-          name: "open-door",
-        },
       },
     },
   },

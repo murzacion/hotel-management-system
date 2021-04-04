@@ -18,6 +18,9 @@ export default new Vuex.Store({
     getBookedRooms: (state) => {
       return state.rooms.filter((x) => !x.isAvailable);
     },
+    getBookings: (state) => {
+      return state.bookings;
+    },
   },
   mutations: {
     importRooms(state, value) {
@@ -33,8 +36,8 @@ export default new Vuex.Store({
   actions: {
     async IMPORT_ROOMS({ commit, state }) {
       state.rooms = [];
-      const cityRef = firebase.firestore().collection("Rooms");
-      const doc = await cityRef.get();
+      const roomRef = firebase.firestore().collection("Rooms");
+      const doc = await roomRef.get();
       doc.forEach((x) => {
         commit("importRooms", {
           id: x.id,
@@ -52,8 +55,31 @@ export default new Vuex.Store({
         });
       });
     },
-    IMPORT_BOOKINGS({ commit }) {
-      commit("importBookings");
+    async IMPORT_BOOKINGS({ commit }) {
+      const bookingRef = firebase.firestore().collection("Bookings");
+      const doc = await bookingRef.get();
+      doc.forEach((x) => {
+        console.log(x.data().reservationData);
+        commit("importBookings", {
+          id: x.id,
+          guestName:
+            x.data().reservationData.userData.firstName +
+            " " +
+            x.data().reservationData.userData.lastName,
+          guestNumber: x.data().reservationData.people,
+          room: x.data().reservationData.room,
+          dateIn: x
+            .data()
+            .reservationData.dates.startDate.toDate()
+            .toDateString(),
+          dateOut: x
+            .data()
+            .reservationData.dates.endDate.toDate()
+            .toDateString(),
+          price: x.data().reservationData.room.price,
+          userData: x.data().reservationData.userData,
+        });
+      });
     },
     async DELETE_ROOM({ commit }, { id, index }) {
       commit("deleteRoom", index);

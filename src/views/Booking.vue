@@ -64,8 +64,7 @@ export default {
         },
         { text: "Guest Name", value: "guestName" },
         { text: "Guest(s)", value: "guestNumber" },
-        { text: "Room Number", value: "roomNumber" },
-        { text: "Extra", value: "extra" },
+        { text: "Room Number", value: "room.number" },
         { text: "Check-in", value: "dateIn" },
         { text: "Check-out", value: "dateOut" },
         { text: "Total", value: "price" },
@@ -77,7 +76,7 @@ export default {
   },
   computed: {
     bookings() {
-      return [];
+      return this.$store.getters.getBookings;
     },
   },
   methods: {},
