@@ -18,4 +18,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.v-btn {
+  outline: none !important;
+}
+</style>

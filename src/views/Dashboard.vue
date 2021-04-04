@@ -14,7 +14,7 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h3 font-weight-bold"
+                <v-card-title class="text-sm-h4 font-weight-bold"
                   >889</v-card-title
                 >
                 <v-card-subtitle class="text-h6 font-weight-medium">
@@ -37,7 +37,7 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h3 font-weight-bold"
+                <v-card-title class="text-sm-h4 font-weight-bold"
                   >889</v-card-title
                 >
                 <v-card-subtitle class="text-h6 font-weight-medium">
@@ -60,7 +60,7 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h3 font-weight-bold"
+                <v-card-title class="text-sm-h4 font-weight-bold"
                   >129</v-card-title
                 >
                 <v-card-subtitle class="text-sm-h6 font-weight-medium">
@@ -83,7 +83,7 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h3 font-weight-bold"
+                <v-card-title class="text-sm-h4 font-weight-bold"
                   >889</v-card-title
                 >
                 <v-card-subtitle class="text-h6 font-weight-medium">
@@ -120,29 +120,33 @@
                     <v-card-subtitle class="card-text-subtitle"
                       >Total rooms: {{ numberOfRooms }}</v-card-subtitle
                     >
-                    <v-card-text class="text-sm-h4 font-weight-bold">{{
+                    <v-card-text class="text-sm-h5 font-weight-bold">{{
                       availableRooms
                     }}</v-card-text>
                   </div>
                 </v-col>
                 <br class="d-md-none d-sm-flex" />
                 <v-col cols="6">
-                  <div>
-                    <v-card-title class="card-text"
-                      >Sold Out Room
-                    </v-card-title>
-                    <v-progress-linear
-                      height="15px"
-                      rounded
-                      :value="(100 * soldOutRoom) / numberOfRooms"
-                      color="#FF6363"
-                    ></v-progress-linear>
-                    <v-card-subtitle class="card-text-subtitle"
-                      >Total rooms: {{ numberOfRooms }}</v-card-subtitle
-                    >
-                    <v-card-text class="text-sm-h4 font-weight-bold">{{
-                      soldOutRoom
-                    }}</v-card-text>
+                  <div class="">
+                    <div>
+                      <v-card-title class="card-text"
+                        >Sold Out Room
+                      </v-card-title>
+                      <v-progress-linear
+                        height="15px"
+                        rounded
+                        :value="(100 * soldOutRoom) / numberOfRooms"
+                        color="#FF6363"
+                      ></v-progress-linear>
+                      <v-card-subtitle class="card-text-subtitle"
+                        >Total rooms: {{ numberOfRooms }}</v-card-subtitle
+                      >
+                    </div>
+                    <div>
+                      <v-card-text class="text-sm-h5 font-weight-bold">{{
+                        soldOutRoom
+                      }}</v-card-text>
+                    </div>
                   </div>
                 </v-col>
               </v-row>
@@ -155,8 +159,14 @@
             class="statistic-card"
             width="433px"
             height="500px"
-            ><v-card-title></v-card-title></v-card
-        ></v-col>
+          >
+            <div class="flex flex-row">
+              <v-card-title>Guest List</v-card-title>
+              <v-spacer></v-spacer>
+              <v-btn class="relative top-4" color="#1DE9B6" text>More</v-btn>
+            </div></v-card
+          ></v-col
+        >
       </v-row>
     </v-container>
   </div>

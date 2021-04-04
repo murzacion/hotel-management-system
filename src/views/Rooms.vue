@@ -437,7 +437,6 @@ export default {
         }
 
         this.editedItem.images = aux;
-        console.log(this.editedItem.images);
         await firebase
           .firestore()
           .collection("Rooms")

@@ -7,7 +7,7 @@ import "firebase/firestore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: { rooms: [] },
+  state: { rooms: [], bookings: [] },
   getters: {
     getRooms: (state) => {
       return state.rooms;
@@ -25,6 +25,9 @@ export default new Vuex.Store({
     },
     deleteRoom(state, value) {
       state.rooms.splice(value, 1);
+    },
+    importBookings(state, value) {
+      state.bookings.push(value);
     },
   },
   actions: {
@@ -48,6 +51,9 @@ export default new Vuex.Store({
           description: x.data().description,
         });
       });
+    },
+    IMPORT_BOOKINGS({ commit }) {
+      commit("importBookings");
     },
     async DELETE_ROOM({ commit }, { id, index }) {
       commit("deleteRoom", index);
