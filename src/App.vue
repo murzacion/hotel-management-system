@@ -15,6 +15,7 @@ export default {
   }),
   created() {
     this.$store.dispatch("IMPORT_ROOMS");
+    this.$store.dispatch("IMPORT_BOOKINGS");
   },
 };
 </script>

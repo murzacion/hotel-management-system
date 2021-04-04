@@ -11,7 +11,7 @@
               :to="item.route"
             >
               <v-list-item-icon>
-                <v-icon size="64px"> {{ item.icon }} </v-icon>
+                <v-icon size="42"> {{ item.icon }} </v-icon>
               </v-list-item-icon>
               <v-list-item-content class="text-h6">
                 {{ item.name }}
@@ -66,9 +66,7 @@ export default {
 .v-list-item__content {
   padding: 0 !important;
 }
-.clicked {
-  color: #1de9b6;
-}
+
 .v-list-item__icon {
   margin: auto !important;
 }
@@ -78,5 +76,8 @@ export default {
 .list-item::before {
   border-radius: 100px;
   background-color: white !important;
+}
+#nav a.router-link-exact-active {
+  color: #42b983 !important;
 }
 </style>

@@ -300,6 +300,8 @@ export default {
         shower: false,
         dinner: false,
       },
+      ranking: 0,
+      opinions: 0,
       description: "",
       images: [],
     },

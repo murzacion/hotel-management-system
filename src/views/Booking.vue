@@ -71,9 +71,7 @@ export default {
       ],
     };
   },
-  created() {
-    this.$store.dispatch("IMPORT_BOOKINGS");
-  },
+
   computed: {
     bookings() {
       return this.$store.getters.getBookings;

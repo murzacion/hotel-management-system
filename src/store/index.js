@@ -68,6 +68,24 @@ export default new Vuex.Store({
             x.data().reservationData.userData.lastName,
           guestNumber: x.data().reservationData.people,
           room: x.data().reservationData.room,
+          reservationDate: {
+            date: x
+              .data()
+              .reservationData.dates.reservationDate.toDate()
+              .toDateString(),
+            hour:
+              x
+                .data()
+                .reservationData.dates.reservationDate.toDate()
+                .getHours()
+                .toString() +
+              ":" +
+              x
+                .data()
+                .reservationData.dates.reservationDate.toDate()
+                .getMinutes()
+                .toString(),
+          },
           dateIn: x
             .data()
             .reservationData.dates.startDate.toDate()
@@ -78,6 +96,7 @@ export default new Vuex.Store({
             .toDateString(),
           price: x.data().reservationData.room.price,
           userData: x.data().reservationData.userData,
+          status: "Booked",
         });
       });
     },
