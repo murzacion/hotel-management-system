@@ -28,17 +28,17 @@ const routes = [
     },
   },
   {
-    path: "/Booking",
-    name: "Booking",
-    component: () => import("@/views/Booking.vue"),
+    path: "/Bookings",
+    name: "Bookings",
+    component: () => import("@/views/Bookings.vue"),
     meta: {
       requiresAuth: true,
     },
   },
   {
-    path: "/Guest",
-    name: "Guest",
-    component: () => import("@/views/Guest.vue"),
+    path: "/Guests",
+    name: "Guests",
+    component: () => import("@/views/Guests.vue"),
     meta: {
       requiresAuth: true,
     },

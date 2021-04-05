@@ -44,14 +44,14 @@ import LeftMenu from "@/components/LeftMenu.vue";
 import TopBar from "@/components/TopBar.vue";
 
 export default {
-  name: "Booking",
+  name: "Bookings",
   components: {
     LeftMenu,
     TopBar,
   },
   data() {
     return {
-      pageName: "Booking",
+      pageName: "Bookings",
       selected: [],
       page: 1,
       pageCount: 0,

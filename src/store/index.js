@@ -38,6 +38,9 @@ export default new Vuex.Store({
     importReviews(state, value) {
       state.reviews.push(value);
     },
+    deleteReview(state, value) {
+      state.reviews.splice(value, 1);
+    },
   },
   actions: {
     async IMPORT_ROOMS({ commit, state }) {
@@ -105,10 +108,10 @@ export default new Vuex.Store({
         });
       });
     },
-    async IMPORT_REVIEWS({ commit }) {
+    async IMPORT_REVIEWS({ commit, state }) {
+      state.reviews = [];
       var reviewsRfe = firebase.firestore().collection("Reviews");
       var doc = await reviewsRfe.get();
-
       doc.forEach((x) => {
         for (const [k, v] of Object.entries(x.data())) {
           let review = {
@@ -141,13 +144,22 @@ export default new Vuex.Store({
         .then((res) => {
           res.items.forEach((itemRef) => {
             itemRef.delete();
-            // All the items under listRef.
           });
         })
         .catch((error) => {
           console.log(error);
-          // Uh-oh, an error occurred!
         });
+    },
+    async DELETE_REVIEW({ commit, state }, item) {
+      console.log(item);
+      commit("deleteReview", state.reviews.indexOf(item));
+      var refReview = await firebase
+        .firestore()
+        .collection("Reviews")
+        .doc(item.id);
+      await refReview.update({
+        [item.userID]: firebase.firestore.FieldValue.delete(),
+      });
     },
   },
   modules: {},

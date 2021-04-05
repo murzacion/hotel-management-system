@@ -16,7 +16,6 @@ export default {
   created() {
     this.$store.dispatch("IMPORT_ROOMS");
     this.$store.dispatch("IMPORT_BOOKINGS");
-    this.$store.dispatch("IMPORT_REVIEWS");
   },
 };
 </script>

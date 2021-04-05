@@ -67,7 +67,7 @@ export default {
   },
   data() {
     return {
-      pageName: "Guest",
+      pageName: "Guests",
       selected: [],
       page: 1,
       pageCount: 0,

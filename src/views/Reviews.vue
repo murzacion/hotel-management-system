@@ -56,7 +56,13 @@
                   </div>
                 </v-col>
                 <v-col cols="8" md="2" class="flex flex-wrap content-center">
-                  <v-btn color="#E53935" rounded dark>Delete</v-btn>
+                  <v-btn
+                    color="#E53935"
+                    @click="deleteReview(item)"
+                    rounded
+                    dark
+                    >Delete</v-btn
+                  >
                 </v-col>
               </v-row>
 
@@ -67,7 +73,6 @@
                   v-model="page"
                   :length="pageCount"
                   circle
-                  @click="mySort()"
                 ></v-pagination>
               </div>
             </v-container>
@@ -96,7 +101,9 @@ export default {
       localreviews: [],
     };
   },
-  created() {},
+  created() {
+    this.$store.dispatch("IMPORT_REVIEWS");
+  },
   computed: {
     reviews() {
       return this.$store.getters.getReviews;
@@ -132,6 +139,9 @@ export default {
       let from = page * perPage - perPage;
       let to = page * perPage;
       return posts.slice(from, to);
+    },
+    deleteReview(item) {
+      this.$store.dispatch("DELETE_REVIEW", item);
     },
   },
 };

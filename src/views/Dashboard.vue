@@ -160,9 +160,9 @@
               width="1200px"
             >
               <div class="flex flex-row">
-                <v-card-title>Guest List</v-card-title>
+                <v-card-title>Preview reviews</v-card-title>
                 <v-spacer></v-spacer>
-                <v-btn class="relative top-4" color="#1DE9B6" to="/Guest" text
+                <v-btn class="relative top-4" color="#1DE9B6" to="/Reviews" text
                   >More</v-btn
                 >
               </div></v-card
@@ -177,9 +177,9 @@
             height="500px"
           >
             <div class="flex flex-row">
-              <v-card-title>Guest List</v-card-title>
+              <v-card-title>Guests List</v-card-title>
               <v-spacer></v-spacer>
-              <v-btn class="relative top-4" color="#1DE9B6" to="/Guest" text
+              <v-btn class="relative top-4" color="#1DE9B6" to="/Guests" text
                 >More</v-btn
               >
             </div></v-card

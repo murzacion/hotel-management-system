@@ -43,13 +43,13 @@ export default {
       { icon: "mdi-door-open", name: "Room", route: "Rooms" },
       {
         icon: "mdi-calendar-month-outline ",
-        name: "Booking",
-        route: "Booking",
+        name: "Bookings",
+        route: "Bookings",
       },
       {
         icon: "mdi-account-multiple-check-outline",
-        name: "Guest",
-        route: "Guest",
+        name: "Guests",
+        route: "Guests",
       },
     ],
     email: "",

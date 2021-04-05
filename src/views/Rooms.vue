@@ -2,11 +2,11 @@
   <v-main class="main">
     <LeftMenu />
     <TopBar :namePage="pageName" />
-    <v-container class="relative top-32 xl:left-20">
+    <v-container class="relative top-32 lg:left-20">
       <v-row align="center">
-        <v-col class="m-auto" cols="12">
+        <v-col class="m-auto" cols="12" md="5">
           <div>
-            <v-card class="my-card" max-width="550px">
+            <v-card class="my-card" max-width="500px">
               <v-tabs
                 class="my-card"
                 height="70px"
