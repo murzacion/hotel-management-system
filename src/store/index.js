@@ -7,7 +7,7 @@ import "firebase/firestore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: { rooms: [], bookings: [] },
+  state: { rooms: [], bookings: [], reviews: [] },
   getters: {
     getRooms: (state) => {
       return state.rooms;
@@ -21,6 +21,9 @@ export default new Vuex.Store({
     getBookings: (state) => {
       return state.bookings;
     },
+    getReviews: (state) => {
+      return state.reviews;
+    },
   },
   mutations: {
     importRooms(state, value) {
@@ -31,6 +34,9 @@ export default new Vuex.Store({
     },
     importBookings(state, value) {
       state.bookings.push(value);
+    },
+    importReviews(state, value) {
+      state.reviews.push(value);
     },
   },
   actions: {
@@ -59,7 +65,6 @@ export default new Vuex.Store({
       const bookingRef = firebase.firestore().collection("Bookings");
       const doc = await bookingRef.get();
       doc.forEach((x) => {
-        console.log(x.data().reservationData);
         commit("importBookings", {
           id: x.id,
           guestName:
@@ -98,6 +103,32 @@ export default new Vuex.Store({
           userData: x.data().reservationData.userData,
           status: "Booked",
         });
+      });
+    },
+    async IMPORT_REVIEWS({ commit }) {
+      var reviewsRfe = firebase.firestore().collection("Reviews");
+      var doc = await reviewsRfe.get();
+
+      doc.forEach((x) => {
+        for (const [k, v] of Object.entries(x.data())) {
+          let review = {
+            id: x.id,
+            userID: k,
+            guestName: v.user.firstName + " " + v.user.lastName,
+            reviewDate: {
+              date: v.reviewDate.toDate().toDateString(),
+
+              hour:
+                v.reviewDate.toDate().getHours().toString() +
+                ":" +
+                v.reviewDate.toDate().getMinutes().toString(),
+            },
+            rate: v.rate,
+            description: v.description,
+          };
+
+          commit("importReviews", review);
+        }
       });
     },
     async DELETE_ROOM({ commit }, { id, index }) {

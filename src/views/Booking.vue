@@ -22,6 +22,7 @@
               color="#1DE9B6"
               v-model="page"
               :length="pageCount"
+              circle
             ></v-pagination>
             <v-text-field
               :value="itemsPerPage"
@@ -89,6 +90,6 @@ export default {
 }
 .booking-table {
   background-color: #f4f4f4 !important;
-  border-radius: 50px !important;
+  border-radius: 30px !important;
 }
 </style>

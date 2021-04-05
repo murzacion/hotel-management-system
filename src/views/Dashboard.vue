@@ -127,7 +127,7 @@
                 </v-col>
                 <br class="d-md-none d-sm-flex" />
                 <v-col cols="6">
-                  <div class="">
+                  <div>
                     <div>
                       <v-card-title class="card-text"
                         >Sold Out Room
@@ -152,6 +152,22 @@
               </v-row>
             </v-container>
           </v-card>
+          <div class="mt-4">
+            <v-card
+              color="#F4F4F4"
+              class="statistic-card"
+              height="300px"
+              width="1200px"
+            >
+              <div class="flex flex-row">
+                <v-card-title>Guest List</v-card-title>
+                <v-spacer></v-spacer>
+                <v-btn class="relative top-4" color="#1DE9B6" to="/Guest" text
+                  >More</v-btn
+                >
+              </div></v-card
+            >
+          </div>
         </v-col>
         <v-col
           ><v-card
@@ -163,10 +179,15 @@
             <div class="flex flex-row">
               <v-card-title>Guest List</v-card-title>
               <v-spacer></v-spacer>
-              <v-btn class="relative top-4" color="#1DE9B6" text>More</v-btn>
+              <v-btn class="relative top-4" color="#1DE9B6" to="/Guest" text
+                >More</v-btn
+              >
             </div></v-card
           ></v-col
         >
+      </v-row>
+      <v-row>
+        <v-col></v-col>
       </v-row>
     </v-container>
   </div>

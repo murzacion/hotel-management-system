@@ -16,7 +16,7 @@
       </v-menu>
       <v-toolbar-title class="toolbar-title">{{ namePage }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="flex-col">
+      <div class="flex-col mr-4">
         <div>{{ email }}</div>
         <div><v-btn @click="logout" text>Log out</v-btn></div>
       </div>
@@ -73,11 +73,11 @@ export default {
   width: calc(100% - 8.5rem) !important;
 }
 .v-toolbar {
-  border-radius: 50px !important;
+  border-radius: 30px !important;
 }
 .toolbar-title {
-  font-size: 35px !important;
-  font-weight: 600;
+  font-size: 30px !important;
+  font-weight: 500;
   color: #757575;
 }
 </style>

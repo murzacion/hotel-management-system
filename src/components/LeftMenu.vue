@@ -60,7 +60,7 @@ export default {
   z-index: 1;
 }
 .v-card {
-  border-radius: 50px !important;
+  border-radius: 30px !important;
   border: none !important;
 }
 .v-list-item__content {
