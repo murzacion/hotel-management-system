@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import "@/assets/css/tailwind.css";
 import firebase from "firebase/app";
 import axios from "axios";
+import "firebase";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
@@ -22,9 +23,12 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
 let app;
+
 firebase.auth().onAuthStateChanged((user) => {
   if (!app) {
+    store.dispatch("IMPORT_BOOKINGS");
     app = new Vue({
       router,
       store,

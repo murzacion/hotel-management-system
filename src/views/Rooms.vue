@@ -110,11 +110,26 @@
                               label="Price"
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
+                          <v-overlay :absolute="true" :value="isLoading">
+                            <v-progress-circular
+                              class="progress"
+                              :rotate="360"
+                              :size="100"
+                              :width="15"
+                              :value="progress"
+                              color="teal"
+                            >
+                              {{ progress }}
+                            </v-progress-circular>
+                          </v-overlay>
+                          <v-col cols="12">
+                            <v-textarea
                               v-model="editedItem.description"
+                              name="Description"
                               label="Description"
-                            ></v-text-field>
+                              auto-grow
+                              outlined
+                            ></v-textarea>
                           </v-col>
                           <v-col cols="12">
                             <v-switch
@@ -247,6 +262,7 @@
 import LeftMenu from "@/components/LeftMenu.vue";
 import TopBar from "../components/TopBar.vue";
 import firebase from "firebase/app";
+import "firebase/functions";
 import "firebase/auth";
 import "firebase/storage";
 export default {
@@ -259,6 +275,8 @@ export default {
     showAll: true,
     showAvailable: false,
     showBooked: false,
+    isLoading: false,
+    progress: 0,
     pageName: "Rooms",
     sort: "number",
     page: 1,
@@ -325,7 +343,7 @@ export default {
       images: [],
     },
   }),
-
+  mounted() {},
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
@@ -412,9 +430,10 @@ export default {
         uploadTask.on(
           firebase.storage.TaskEvent.STATE_CHANGED,
           (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
+            this.progress = Math.ceil(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            console.log("Upload is " + this.progress + "% done");
           },
           (error) => {
             console.log(error);
@@ -428,24 +447,41 @@ export default {
         );
       });
     },
-
+    async getImagesUrl() {
+      let aux = [];
+      for (var i = 0; i < this.imagesURL.length; i++) {
+        this.isLoading = true;
+        const res = await this.uploadImg(this.imagesURL[i]);
+        this.isLoading = false;
+        aux.push(res);
+      }
+      return aux;
+    },
     async save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        let aux = [];
-        for (var i = 0; i < this.imagesURL.length; i++) {
-          const res = await this.uploadImg(this.imagesURL[i]);
-          aux.push(res);
+        let imgs = await this.getImagesUrl();
+        if (imgs.length > 0) {
+          this.editedItem.images = this.editedItem.images.concat(imgs);
         }
-
-        this.editedItem.images = aux;
         await firebase
           .firestore()
           .collection("Rooms")
           .doc(this.editedItem.number)
           .set(this.editedItem)
-          .then(() => console.log("norm"))
+          .then(() => console.log("ok"))
+          .catch((error) => {
+            console.log(error);
+          });
+        this.$store.dispatch("IMPORT_ROOMS");
+        this.close();
+      } else {
+        this.editedItem.images = this.getImagesUrl;
+        await firebase
+          .firestore()
+          .collection("Rooms")
+          .doc(this.editedItem.number)
+          .set(this.editedItem)
+          .then(() => console.log("ok"))
           .catch((error) => {
             console.log(error);
           });
@@ -485,5 +521,8 @@ export default {
 .rooms-table {
   background-color: #f4f4f4 !important;
   border-radius: 30px !important;
+}
+.progress {
+  z-index: 1 !important;
 }
 </style>

@@ -17,8 +17,27 @@
       <v-toolbar-title class="toolbar-title">{{ namePage }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="flex-col mr-4">
-        <div>{{ email }}</div>
-        <div><v-btn @click="logout" text>Log out</v-btn></div>
+        <v-avatar color="#1DE9B6">
+          <v-icon dark> mdi-account-circle </v-icon>
+        </v-avatar>
+        <v-menu left bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-menu-down</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item>
+              <v-list-item-title>{{ email }}</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title
+                ><v-btn @click="logout" text>Log out</v-btn></v-list-item-title
+              >
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
     </v-app-bar>
   </div>

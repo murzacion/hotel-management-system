@@ -5,6 +5,7 @@
     viewBox="0 0 74 74"
     width="512"
     xmlns="http://www.w3.org/2000/svg"
+    class="stroke-current stroke-1 text-green-600"
   >
     <path
       d="m60.41 43.44a1 1 0 0 1 -1-1v-2.97a1 1 0 0 1 2 0v2.97a1 1 0 0 1 -1 1z"

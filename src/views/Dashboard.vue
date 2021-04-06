@@ -2,7 +2,7 @@
   <div>
     <LeftMenu />
     <TopBar :namePage="pageName" />
-    <v-container class="relative top-32 md:left-20">
+    <v-container class="relative top-32 lg:left-20">
       <v-row>
         <v-col>
           <v-card
@@ -97,7 +97,6 @@
           </v-card>
         </v-col>
       </v-row>
-
       <v-row>
         <v-col>
           <v-card
@@ -110,7 +109,9 @@
               <v-row>
                 <v-col cols="6">
                   <div>
-                    <v-card-title class="card-text">Aviable Room </v-card-title>
+                    <v-card-title class="md:t card-text"
+                      >Available Room
+                    </v-card-title>
                     <v-progress-linear
                       height="15px"
                       rounded
@@ -152,39 +153,9 @@
               </v-row>
             </v-container>
           </v-card>
-          <div class="mt-4">
-            <v-card
-              color="#F4F4F4"
-              class="statistic-card"
-              height="300px"
-              width="1200px"
-            >
-              <div class="flex flex-row">
-                <v-card-title>Preview reviews</v-card-title>
-                <v-spacer></v-spacer>
-                <v-btn class="relative top-4" color="#1DE9B6" to="/Reviews" text
-                  >More</v-btn
-                >
-              </div></v-card
-            >
-          </div>
+          <PreviewReviewCard />
         </v-col>
-        <v-col
-          ><v-card
-            color="#F4F4F4"
-            class="statistic-card"
-            width="433px"
-            height="500px"
-          >
-            <div class="flex flex-row">
-              <v-card-title>Guests List</v-card-title>
-              <v-spacer></v-spacer>
-              <v-btn class="relative top-4" color="#1DE9B6" to="/Guests" text
-                >More</v-btn
-              >
-            </div></v-card
-          ></v-col
-        >
+        <v-col><PreviewGuestsList /></v-col>
       </v-row>
       <v-row>
         <v-col></v-col>
@@ -196,12 +167,16 @@
 <script>
 import LeftMenu from "@/components/LeftMenu.vue";
 import TopBar from "@/components/TopBar.vue";
+import PreviewReviewCard from "@/components/PreviewReviewCard.vue";
+import PreviewGuestsList from "@/components/PreviewGuestsList.vue";
 
 export default {
   name: "Dashboard",
   components: {
     LeftMenu,
     TopBar,
+    PreviewReviewCard,
+    PreviewGuestsList,
   },
   data: () => ({
     pageName: "Dashboard",

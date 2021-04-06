@@ -101,7 +101,7 @@ export default {
       localreviews: [],
     };
   },
-  created() {
+  mounted() {
     this.$store.dispatch("IMPORT_REVIEWS");
   },
   computed: {
