@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
+  <v-dialog ref="form" v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn target="_blank" v-bind="attrs" v-on="on" text> Send Email </v-btn>
     </template>
@@ -64,9 +64,7 @@ export default {
     },
   },
   watch: {},
-  created() {
-    console.log(this.allEmails);
-  },
+
   methods: {
     async saveAlert() {
       try {

@@ -72,23 +72,23 @@
                       New Item
                     </v-btn>
                   </template>
-                  <v-overlay :absolute="true" :value="isLoading">
-                    <v-progress-circular
-                      class="progress"
-                      :rotate="360"
-                      :size="100"
-                      :width="15"
-                      :value="progress"
-                      color="teal"
-                    >
-                      {{ progress }}
-                    </v-progress-circular>
-                  </v-overlay>
+
                   <v-card>
                     <v-card-title>
                       <span class="headline">{{ formTitle }}</span>
                     </v-card-title>
-
+                    <v-overlay :absolute="true" :value="isLoading">
+                      <v-progress-circular
+                        class="progress"
+                        :rotate="360"
+                        :size="100"
+                        :width="15"
+                        :value="progress"
+                        color="teal"
+                      >
+                        {{ progress }}
+                      </v-progress-circular>
+                    </v-overlay>
                     <v-card-text>
                       <v-container>
                         <v-row>
@@ -96,30 +96,35 @@
                             <v-text-field
                               v-model="editedItem.RoomType"
                               label="Name"
+                              :rules="rules"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
                               v-model="editedItem.number"
                               label="Number"
+                              :rules="rules"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
                               v-model="editedItem.floor"
                               label="Floor"
+                              :rules="rules"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
                               v-model="editedItem.capacity"
                               label="Capacity"
+                              :rules="rules"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
                               v-model="editedItem.price"
                               label="Price"
+                              :rules="rules"
                             ></v-text-field>
                           </v-col>
 
@@ -273,6 +278,7 @@ export default {
     TopBar,
   },
   data: () => ({
+    rules: [(v) => !!v || "This field is required"],
     showAll: true,
     showAvailable: false,
     showBooked: false,
@@ -476,7 +482,7 @@ export default {
         this.$store.dispatch("IMPORT_ROOMS");
         this.close();
       } else {
-        this.editedItem.images = this.getImagesUrl;
+        this.editedItem.images = await this.getImagesUrl();
         await firebase
           .firestore()
           .collection("Rooms")
