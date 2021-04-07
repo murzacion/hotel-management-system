@@ -14,16 +14,14 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h4 font-weight-bold"
-                  >889</v-card-title
-                >
+                <v-card-title class="text-sm-h4 font-weight-bold">{{
+                  numberOfBookings
+                }}</v-card-title>
                 <v-card-subtitle class="text-h6 font-weight-medium">
-                  New Booking</v-card-subtitle
+                  Bookings</v-card-subtitle
                 >
               </div>
-              <v-avatar class="mt-6 mr-6" size="64" tile>
-                <v-img src="../assets/icon/booking (1).png"></v-img>
-              </v-avatar>
+              <v-icon class="mr-6" size="64">mdi-beaker-check-outline</v-icon>
             </div>
           </v-card>
         </v-col>
@@ -37,16 +35,14 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h4 font-weight-bold"
-                  >889</v-card-title
-                >
+                <v-card-title class="text-sm-h4 font-weight-bold">{{
+                  numberOfSchedule
+                }}</v-card-title>
                 <v-card-subtitle class="text-h6 font-weight-medium">
-                  Schendule Room</v-card-subtitle
+                  Schedule Rooms</v-card-subtitle
                 >
               </div>
-              <v-avatar class="mt-6 mr-6" size="64" tile>
-                <v-img src="../assets/icon/calendar.png"></v-img>
-              </v-avatar>
+              <v-icon class="mr-6" size="64">mdi-calendar-clock-outline</v-icon>
             </div>
           </v-card>
         </v-col>
@@ -60,16 +56,14 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h4 font-weight-bold"
-                  >129</v-card-title
-                >
+                <v-card-title class="text-sm-h4 font-weight-bold">{{
+                  numberOfCheckin
+                }}</v-card-title>
                 <v-card-subtitle class="text-sm-h6 font-weight-medium">
                   Check-in</v-card-subtitle
                 >
               </div>
-              <v-avatar class="mt-6 mr-6" size="64" tile>
-                <v-img src="../assets/icon/check-in(2).png"></v-img>
-              </v-avatar>
+              <v-icon class="mr-6" size="64">mdi-account-arrow-left</v-icon>
             </div>
           </v-card>
         </v-col>
@@ -83,16 +77,14 @@
           >
             <div class="ml-2 d-flex justify-space-between">
               <div>
-                <v-card-title class="text-sm-h4 font-weight-bold"
-                  >889</v-card-title
-                >
-                <v-card-subtitle class="text-h6 font-weight-medium">
+                <v-card-title class="text-sm-h4 font-weight-bold">{{
+                  numberOfCheckout
+                }}</v-card-title>
+                <v-card-subtitle class="text-sm-h6 font-weight-medium">
                   Check-out</v-card-subtitle
                 >
               </div>
-              <v-avatar class="mt-6 mr-6" size="64" tile>
-                <v-img src="../assets/icon/check-out(1).png"></v-img>
-              </v-avatar>
+              <v-icon class="mr-6" size="64">mdi-account-arrow-right</v-icon>
             </div>
           </v-card>
         </v-col>
@@ -175,9 +167,11 @@ export default {
     PreviewReviewCard,
     PreviewGuestsList,
   },
-  data: () => ({
-    pageName: "Dashboard",
-  }),
+  data() {
+    return {
+      pageName: "Dashboard",
+    };
+  },
   computed: {
     availableRooms() {
       return this.$store.getters.getAvailableRooms.length;
@@ -188,9 +182,54 @@ export default {
     soldOutRoom() {
       return this.$store.getters.getBookedRooms.length;
     },
+    bookings() {
+      return this.$store.getters.getBookings;
+    },
+    numberOfBookings() {
+      return this.bookings.length;
+    },
+    numberOfSchedule() {
+      return this.getnNumberOfSchedule();
+    },
+    numberOfCheckin() {
+      return this.getNumberOfCheckin();
+    },
+    numberOfCheckout() {
+      return this.getNumberOfCheckout();
+    },
   },
 
-  methods: {},
+  methods: {
+    getnNumberOfSchedule() {
+      let b = this.bookings;
+      var nr = 0;
+      b.forEach((element) => {
+        var dateIn = element.dateIn;
+        if (new Date(dateIn) < new Date()) nr++;
+      });
+      return nr;
+    },
+    getNumberOfCheckin() {
+      let b = this.bookings;
+      var nr = 0;
+      b.forEach((element) => {
+        var dateIn = element.dateIn;
+        var dateOut = element.dateOut;
+        if (new Date(dateIn) >= new Date() && new Date(dateOut) > new Date())
+          nr++;
+      });
+      return nr;
+    },
+    getNumberOfCheckout() {
+      let b = this.bookings;
+      var nr = 0;
+      b.forEach((element) => {
+        var dateOut = element.dateOut;
+        if (new Date(dateOut) <= new Date()) nr++;
+      });
+      return nr;
+    },
+  },
 };
 </script>
 
