@@ -68,7 +68,7 @@
         <v-img
           max-height="64px"
           max-width="64px"
-          src="..//assets/icon/hotel.png"
+          src="../assets/icon/hotel.png"
         ></v-img
       ></v-col>
       <v-col sm="auto">
