@@ -7,7 +7,7 @@ import "firebase/firestore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: { rooms: [], bookings: [], reviews: [] },
+  state: { users: [], rooms: [], bookings: [], reviews: [] },
   getters: {
     getRooms: (state) => {
       return state.rooms;
@@ -23,6 +23,9 @@ export default new Vuex.Store({
     },
     getReviews: (state) => {
       return state.reviews;
+    },
+    getUsers: (state) => {
+      return state.users;
     },
   },
   mutations: {
@@ -40,6 +43,9 @@ export default new Vuex.Store({
     },
     deleteReview(state, value) {
       state.reviews.splice(value, 1);
+    },
+    importUsers(state, value) {
+      state.users.push(value);
     },
   },
   actions: {
@@ -106,6 +112,22 @@ export default new Vuex.Store({
           userData: x.data().reservationData.userData,
           status: "Booked",
         });
+      });
+    },
+    async IMPORT_USERS({ commit }) {
+      var usersRfe = firebase.firestore().collection("Users");
+      var doc = await usersRfe.get();
+      doc.forEach((x) => {
+        const user = {
+          userId: x.id,
+          email: x.data().email,
+          age: x.data().age,
+          firstName: x.data().firstName,
+          lastName: x.data().lastName,
+          gender: x.data().gender,
+        };
+
+        commit("importUsers", user);
       });
     },
     async IMPORT_REVIEWS({ commit, state }) {

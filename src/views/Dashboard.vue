@@ -109,7 +109,7 @@
               <v-row>
                 <v-col cols="6">
                   <div>
-                    <v-card-title class="md:t card-text"
+                    <v-card-title class="card-text"
                       >Available Room
                     </v-card-title>
                     <v-progress-linear
@@ -129,25 +129,22 @@
                 <br class="d-md-none d-sm-flex" />
                 <v-col cols="6">
                   <div>
-                    <div>
-                      <v-card-title class="card-text"
-                        >Sold Out Room
-                      </v-card-title>
-                      <v-progress-linear
-                        height="15px"
-                        rounded
-                        :value="(100 * soldOutRoom) / numberOfRooms"
-                        color="#FF6363"
-                      ></v-progress-linear>
-                      <v-card-subtitle class="card-text-subtitle"
-                        >Total rooms: {{ numberOfRooms }}</v-card-subtitle
-                      >
-                    </div>
-                    <div>
-                      <v-card-text class="text-sm-h5 font-weight-bold">{{
-                        soldOutRoom
-                      }}</v-card-text>
-                    </div>
+                    <v-card-title class="card-text"
+                      >Sold Out Room
+                    </v-card-title>
+                    <v-progress-linear
+                      height="15px"
+                      rounded
+                      :value="(100 * soldOutRoom) / numberOfRooms"
+                      color="#FF6363"
+                    ></v-progress-linear>
+                    <v-card-subtitle class="card-text-subtitle"
+                      >Total rooms: {{ numberOfRooms }}</v-card-subtitle
+                    >
+
+                    <v-card-text class="text-sm-h5 font-weight-bold">{{
+                      soldOutRoom
+                    }}</v-card-text>
                   </div>
                 </v-col>
               </v-row>

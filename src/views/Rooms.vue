@@ -72,6 +72,18 @@
                       New Item
                     </v-btn>
                   </template>
+                  <v-overlay :absolute="true" :value="isLoading">
+                    <v-progress-circular
+                      class="progress"
+                      :rotate="360"
+                      :size="100"
+                      :width="15"
+                      :value="progress"
+                      color="teal"
+                    >
+                      {{ progress }}
+                    </v-progress-circular>
+                  </v-overlay>
                   <v-card>
                     <v-card-title>
                       <span class="headline">{{ formTitle }}</span>
@@ -110,18 +122,7 @@
                               label="Price"
                             ></v-text-field>
                           </v-col>
-                          <v-overlay :absolute="true" :value="isLoading">
-                            <v-progress-circular
-                              class="progress"
-                              :rotate="360"
-                              :size="100"
-                              :width="15"
-                              :value="progress"
-                              color="teal"
-                            >
-                              {{ progress }}
-                            </v-progress-circular>
-                          </v-overlay>
+
                           <v-col cols="12">
                             <v-textarea
                               v-model="editedItem.description"

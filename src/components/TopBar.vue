@@ -32,6 +32,9 @@
               <v-list-item-title>{{ email }}</v-list-item-title>
             </v-list-item>
             <v-list-item>
+              <v-list-item-title><EmailForm /></v-list-item-title>
+            </v-list-item>
+            <v-list-item>
               <v-list-item-title
                 ><v-btn @click="logout" text>Log out</v-btn></v-list-item-title
               >
@@ -44,6 +47,7 @@
 </template>
 
 <script>
+import EmailForm from "@/components/EmailForm.vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
@@ -51,6 +55,9 @@ export default {
   name: "TopBar",
   props: {
     namePage: String,
+  },
+  components: {
+    EmailForm,
   },
   data: () => ({
     items: [
