@@ -4,7 +4,7 @@
     <TopBar :namePage="pageName" />
     <v-container class="relative top-32 lg:left-20">
       <v-row>
-        <v-col>
+        <v-col cols="12" sm="6" lg="3">
           <v-card
             class="statistic-card"
             width="370px"
@@ -25,7 +25,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col>
+        <v-col cols="12" sm="6" lg="3">
           <v-card
             class="statistic-card"
             width="370px"
@@ -46,7 +46,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col>
+        <v-col cols="12" sm="6" lg="3">
           <v-card
             class="statistic-card"
             width="370px"
@@ -59,7 +59,7 @@
                 <v-card-title class="text-sm-h4 font-weight-bold">{{
                   numberOfCheckin
                 }}</v-card-title>
-                <v-card-subtitle class="text-sm-h6 font-weight-medium">
+                <v-card-subtitle class="text-h6 font-weight-medium">
                   Check-in</v-card-subtitle
                 >
               </div>
@@ -67,7 +67,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col>
+        <v-col cols="12" sm="6" lg="3">
           <v-card
             class="statistic-card"
             width="370px"
@@ -80,7 +80,7 @@
                 <v-card-title class="text-sm-h4 font-weight-bold">{{
                   numberOfCheckout
                 }}</v-card-title>
-                <v-card-subtitle class="text-sm-h6 font-weight-medium">
+                <v-card-subtitle class="text-h6 font-weight-medium">
                   Check-out</v-card-subtitle
                 >
               </div>
@@ -89,6 +89,7 @@
           </v-card>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col>
           <v-card
@@ -99,12 +100,13 @@
           >
             <v-container class="">
               <v-row>
-                <v-col cols="6">
+                <v-col cols="10" md="5">
                   <div>
                     <v-card-title class="card-text"
-                      >Available Room
+                      ><span class="text-base md:text-xl">Available Room</span>
                     </v-card-title>
                     <v-progress-linear
+                      class="ml-3"
                       height="15px"
                       rounded
                       :value="(100 * availableRooms) / numberOfRooms"
@@ -118,13 +120,14 @@
                     }}</v-card-text>
                   </div>
                 </v-col>
-                <br class="d-md-none d-sm-flex" />
-                <v-col cols="6">
-                  <div>
+
+                <v-col class="md:ml-24" cols="10" md="5">
+                  <div class="">
                     <v-card-title class="card-text"
-                      >Sold Out Room
+                      ><span class="text-base md:text-xl">Available Room</span>
                     </v-card-title>
                     <v-progress-linear
+                      class="ml-3"
                       height="15px"
                       rounded
                       :value="(100 * soldOutRoom) / numberOfRooms"
@@ -240,10 +243,7 @@ export default {
 .v-card__subtitle {
   color: white !important;
 }
-.v-progress-linear {
-  max-width: 400px;
-  margin-left: 15px;
-}
+
 .rooms-aviable {
   padding-left: 20px;
 }

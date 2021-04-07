@@ -27,7 +27,6 @@ let app;
 
 firebase.auth().onAuthStateChanged((user) => {
   if (!app) {
-    store.dispatch("IMPORT_BOOKINGS");
     store.dispatch("IMPORT_USERS");
     app = new Vue({
       router,

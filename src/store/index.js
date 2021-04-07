@@ -70,7 +70,8 @@ export default new Vuex.Store({
         });
       });
     },
-    async IMPORT_BOOKINGS({ commit }) {
+    async IMPORT_BOOKINGS({ commit, state }) {
+      state.bookings = [];
       const bookingRef = firebase.firestore().collection("Bookings");
       const doc = await bookingRef.get();
       doc.forEach((x) => {

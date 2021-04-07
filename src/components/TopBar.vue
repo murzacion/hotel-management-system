@@ -14,7 +14,11 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-toolbar-title class="toolbar-title">{{ namePage }}</v-toolbar-title>
+      <v-toolbar-title>
+        <span class="md:text-3xl font-bold text-gray-500">{{
+          namePage
+        }}</span></v-toolbar-title
+      >
       <v-spacer></v-spacer>
       <div class="flex-col mr-4">
         <v-avatar color="#1DE9B6">
@@ -102,7 +106,7 @@ export default {
   border-radius: 30px !important;
 }
 .toolbar-title {
-  font-size: 30px !important;
+  font-size: 30px;
   font-weight: 500;
   color: #757575;
 }

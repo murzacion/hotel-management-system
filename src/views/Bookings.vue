@@ -72,7 +72,9 @@ export default {
       ],
     };
   },
-
+  mounted() {
+    this.$store.dispatch("IMPORT_BOOKINGS");
+  },
   computed: {
     bookings() {
       return this.$store.getters.getBookings;

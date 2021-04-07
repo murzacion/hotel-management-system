@@ -30,7 +30,9 @@ export default {
   data() {
     return { displayedPosts: [] };
   },
-
+  beforeCreate() {
+    this.$store.dispatch("IMPORT_BOOKINGS");
+  },
   computed: {
     bookings() {
       return this.$store.getters.getBookings;
