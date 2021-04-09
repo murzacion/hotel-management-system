@@ -25,6 +25,12 @@
                 </v-col>
               </v-row>
               <v-divider />
+              <p
+                class="mt-8 text-center text-lg"
+                v-if="localreviews.length === 0"
+              >
+                No data found
+              </p>
               <v-row
                 v-for="(item, key) in displayedPosts"
                 :key="key"
@@ -98,6 +104,7 @@ export default {
       rating: 5,
       page: 1,
       itemsPerPage: 10,
+      previousRate: 5,
       localreviews: [],
     };
   },
@@ -120,16 +127,18 @@ export default {
       this.localreviews = this.reviews;
     },
     rating(val) {
-      function compare(a, b) {
-        if (a.rate > b.rate && a.rate === val) {
-          return 1;
-        } else if (b.rate > a.rate) {
-          return -1;
-        } else {
-          return 0;
-        }
+      if (val >= this.previousRate)
+        this.localreviews.sort((a, b) => {
+          if (a.rate > b.rate && val === a.rate) return -1;
+          else return 0;
+        });
+      else {
+        this.localreviews.sort((a, b) => {
+          if (a.rate < b.rate && val === a.rate) return -1;
+          else return 0;
+        });
       }
-      this.localreviews.sort(compare);
+      this.previousRate = val;
     },
   },
   methods: {

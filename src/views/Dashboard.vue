@@ -39,7 +39,7 @@
                   numberOfSchedule
                 }}</v-card-title>
                 <v-card-subtitle class="text-h6 font-weight-medium">
-                  Schedule Rooms</v-card-subtitle
+                  Scheduled rooms</v-card-subtitle
                 >
               </div>
               <v-icon class="mr-6" size="64">mdi-calendar-clock-outline</v-icon>
@@ -103,7 +103,7 @@
                 <v-col cols="10" md="5">
                   <div>
                     <v-card-title class="card-text"
-                      ><span class="text-base md:text-xl">Available Room</span>
+                      ><span class="text-base md:text-xl">Available Rooms</span>
                     </v-card-title>
                     <v-progress-linear
                       class="ml-3"
@@ -124,7 +124,7 @@
                 <v-col class="md:ml-24" cols="10" md="5">
                   <div class="">
                     <v-card-title class="card-text"
-                      ><span class="text-base md:text-xl">Available Room</span>
+                      ><span class="text-base md:text-xl">Sold out Rooms</span>
                     </v-card-title>
                     <v-progress-linear
                       class="ml-3"

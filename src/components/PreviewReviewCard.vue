@@ -14,6 +14,9 @@
         >
       </div>
       <v-divider></v-divider>
+      <p class="mt-8 text-center text-lg" v-if="reviews.length === 0">
+        No data found
+      </p>
       <v-container>
         <v-row
           v-for="(item, key) in displayedPosts"
@@ -44,8 +47,8 @@
               {{ item.description }}
             </div>
           </v-col>
-        </v-row></v-container
-      ></v-card
+        </v-row>
+      </v-container></v-card
     >
   </div>
 </template>

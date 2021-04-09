@@ -90,113 +90,123 @@
                       </v-progress-circular>
                     </v-overlay>
                     <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.RoomType"
-                              label="Name"
-                              :rules="rules"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.number"
-                              label="Number"
-                              :rules="rules"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.floor"
-                              label="Floor"
-                              :rules="rules"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.capacity"
-                              label="Capacity"
-                              :rules="rules"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              v-model="editedItem.price"
-                              label="Price"
-                              :rules="rules"
-                            ></v-text-field>
-                          </v-col>
+                      <v-form ref="form">
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                v-model="editedItem.RoomType"
+                                label="Name"
+                                :rules="[rules.required]"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                type="number"
+                                v-model.number="editedItem.number"
+                                label="Number"
+                                :rules="[rules.required, rules.min]"
+                                min="0"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                type="number"
+                                v-model.number="editedItem.floor"
+                                label="Floor"
+                                :rules="[rules.required, rules.min]"
+                                min="0"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                type="number"
+                                v-model.number="editedItem.capacity"
+                                label="Capacity"
+                                :rules="[rules.required, rules.min]"
+                                min="0"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                type="number"
+                                v-model.number="editedItem.price"
+                                label="Price"
+                                :rules="[rules.required, rules.min]"
+                                min="0"
+                              ></v-text-field>
+                            </v-col>
 
-                          <v-col cols="12">
-                            <v-textarea
-                              v-model="editedItem.description"
-                              name="Description"
-                              label="Description"
-                              auto-grow
-                              outlined
-                            ></v-textarea>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-switch
-                              v-model="editedItem.facilities.Wifi"
-                              label="Wifi"
-                              color="success"
-                              hide-details
-                            ></v-switch>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-switch
-                              v-model="editedItem.facilities.TV"
-                              label="TV"
-                              color="success"
-                              hide-details
-                            ></v-switch>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-switch
-                              v-model="editedItem.facilities.bed"
-                              label="Singel Bed"
-                              color="success"
-                              hide-details
-                            ></v-switch>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-switch
-                              v-model="editedItem.facilities.doubleBed"
-                              label="Double Bed"
-                              color="success"
-                              hide-details
-                            ></v-switch>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-switch
-                              v-model="editedItem.facilities.shower"
-                              label="Shower"
-                              color="success"
-                              hide-details
-                            ></v-switch>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-switch
-                              v-model="editedItem.facilities.dinner"
-                              label="Dinner"
-                              color="success"
-                              hide-details
-                            ></v-switch>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-file-input
-                              v-model="imagesURL"
-                              label="File input"
-                              filled
-                              prepend-icon="mdi-camera"
-                              show-size
-                              multiple
-                            ></v-file-input>
-                          </v-col>
-                        </v-row>
-                      </v-container>
+                            <v-col cols="12">
+                              <v-textarea
+                                v-model="editedItem.description"
+                                name="Description"
+                                label="Description"
+                                auto-grow
+                                outlined
+                              ></v-textarea>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-switch
+                                v-model="editedItem.facilities.Wifi"
+                                label="Wifi"
+                                color="success"
+                                hide-details
+                              ></v-switch>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-switch
+                                v-model="editedItem.facilities.TV"
+                                label="TV"
+                                color="success"
+                                hide-details
+                              ></v-switch>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-switch
+                                v-model="editedItem.facilities.bed"
+                                label="Singel Bed"
+                                color="success"
+                                hide-details
+                              ></v-switch>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-switch
+                                v-model="editedItem.facilities.doubleBed"
+                                label="Double Bed"
+                                color="success"
+                                hide-details
+                              ></v-switch>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-switch
+                                v-model="editedItem.facilities.shower"
+                                label="Shower"
+                                color="success"
+                                hide-details
+                              ></v-switch>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-switch
+                                v-model="editedItem.facilities.dinner"
+                                label="Dinner"
+                                color="success"
+                                hide-details
+                              ></v-switch>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-file-input
+                                v-model="imagesURL"
+                                label="File input"
+                                filled
+                                prepend-icon="mdi-camera"
+                                show-size
+                                multiple
+                              ></v-file-input>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-form>
                     </v-card-text>
 
                     <v-card-actions>
@@ -278,7 +288,10 @@ export default {
     TopBar,
   },
   data: () => ({
-    rules: [(v) => !!v || "This field is required"],
+    rules: {
+      required: (v) => !!v || "This field is required",
+      min: (v) => v >= 0 || "Min is 0",
+    },
     showAll: true,
     showAvailable: false,
     showBooked: false,
@@ -465,35 +478,37 @@ export default {
       return aux;
     },
     async save() {
-      if (this.editedIndex > -1) {
-        let imgs = await this.getImagesUrl();
-        if (imgs.length > 0) {
-          this.editedItem.images = this.editedItem.images.concat(imgs);
+      if (this.$refs.form.validate()) {
+        if (this.editedIndex > -1) {
+          let imgs = await this.getImagesUrl();
+          if (imgs.length > 0) {
+            this.editedItem.images = this.editedItem.images.concat(imgs);
+          }
+          await firebase
+            .firestore()
+            .collection("Rooms")
+            .doc(this.editedItem.number.toString())
+            .set(this.editedItem)
+            .then(() => console.log("ok"))
+            .catch((error) => {
+              console.log(error);
+            });
+          this.$store.dispatch("IMPORT_ROOMS");
+          this.close();
+        } else {
+          this.editedItem.images = await this.getImagesUrl();
+          await firebase
+            .firestore()
+            .collection("Rooms")
+            .doc(this.editedItem.number.toString())
+            .set(this.editedItem)
+            .then(() => console.log("ok"))
+            .catch((error) => {
+              console.log(error);
+            });
+          this.$store.dispatch("IMPORT_ROOMS");
+          this.close();
         }
-        await firebase
-          .firestore()
-          .collection("Rooms")
-          .doc(this.editedItem.number)
-          .set(this.editedItem)
-          .then(() => console.log("ok"))
-          .catch((error) => {
-            console.log(error);
-          });
-        this.$store.dispatch("IMPORT_ROOMS");
-        this.close();
-      } else {
-        this.editedItem.images = await this.getImagesUrl();
-        await firebase
-          .firestore()
-          .collection("Rooms")
-          .doc(this.editedItem.number)
-          .set(this.editedItem)
-          .then(() => console.log("ok"))
-          .catch((error) => {
-            console.log(error);
-          });
-        this.$store.dispatch("IMPORT_ROOMS");
-        this.close();
       }
     },
     getColor(isAvailable) {

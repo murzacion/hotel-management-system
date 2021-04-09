@@ -68,7 +68,7 @@ export default {
         { text: "Room Number", value: "room.number" },
         { text: "Check-in", value: "dateIn" },
         { text: "Check-out", value: "dateOut" },
-        { text: "Total", value: "price" },
+        { text: "Total ($)", value: "price" },
       ],
     };
   },

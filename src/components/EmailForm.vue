@@ -8,31 +8,33 @@
         <span class="headline">Send Email to All Users</span>
       </v-card-title>
       <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                :rules="rules"
-                label="Subject*"
-                item-text="name"
-                v-model="subject"
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea
-                :rules="rules"
-                v-model="text"
-                name="Text"
-                label="Text*"
-                auto-grow
-                outlined
-                required
-              ></v-textarea>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-form ref="form">
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  :rules="rules"
+                  label="Subject*"
+                  item-text="name"
+                  v-model="subject"
+                  outlined
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-textarea
+                  :rules="rules"
+                  v-model="text"
+                  name="Text"
+                  label="Text*"
+                  auto-grow
+                  outlined
+                  required
+                ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
         <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
@@ -67,13 +69,15 @@ export default {
 
   methods: {
     async saveAlert() {
-      try {
-        await this.addData();
-        this.subject = "";
-        this.text = "";
-        this.dialog = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.form.validate()) {
+        try {
+          await this.addData();
+          this.subject = "";
+          this.text = "";
+          this.dialog = false;
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     async addData() {
@@ -86,9 +90,12 @@ export default {
           subject: this.subject,
           text: this.text,
         })
-        .then(() => console.log("ok"))
-        .catch((error) => {
-          console.log(error);
+        .then(() => {
+          this.dialog = false;
+          alert("Email send.");
+        })
+        .catch(() => {
+          alert("Error");
         });
     },
     closeModal() {
