@@ -107,14 +107,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.main {
-  background-color: #f9f9f9;
-  height: 100%;
-  max-width: 100%;
-}
-.guests-table {
-  background-color: #f4f4f4 !important;
-  border-radius: 30px !important;
-}
+<style lang="sass">
+.main
+  background-color: #f9f9f9
+  height: 100%
+  max-width: 100%
+
+.guests-table
+  background-color: #f4f4f4 !important
+  border-radius: 30px !important
 </style>
